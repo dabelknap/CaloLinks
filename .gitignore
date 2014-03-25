@@ -1,0 +1,12 @@
+*.root
+*.png
+*.log
+*.pyc
+*.json
+*.pdf
+*.swp
+*.o
+*.so
+__init__.py
+*~
+CVS
