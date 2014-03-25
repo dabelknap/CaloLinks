@@ -22,7 +22,7 @@ CrateLinks::check_RC_indicies(unsigned int card, unsigned int region) {
 
 
 void
-CrateLinks::set_RCTEt(unsigned int card, unsigned int region, unsigned int bit,
+CrateLinks::set_RCEt(unsigned int card, unsigned int region, unsigned int bit,
     uint8_t value) {
   check_RC_indicies(card, region);
   if (bit > 9) {
@@ -33,7 +33,7 @@ CrateLinks::set_RCTEt(unsigned int card, unsigned int region, unsigned int bit,
 
 
 uint8_t
-CrateLinks::get_RCTEt(unsigned int card, unsigned int region,
+CrateLinks::get_RCEt(unsigned int card, unsigned int region,
     unsigned int bit) {
   check_RC_indicies(card, region);
   if (bit > 9) {
@@ -44,44 +44,44 @@ CrateLinks::get_RCTEt(unsigned int card, unsigned int region,
 
 
 void
-CrateLinks::set_RCTTau(unsigned int card, unsigned int region, uint8_t value) {
+CrateLinks::set_RCTau(unsigned int card, unsigned int region, uint8_t value) {
   check_RC_indicies(card, region);
   RCTau[card][region] = value & 0x1;
 }
 
 
 uint8_t
-CrateLinks::get_RCTTau(unsigned int card, unsigned int region) {
+CrateLinks::get_RCTau(unsigned int card, unsigned int region) {
   check_RC_indicies(card, region);
-  return RCTau[card][region]
+  return RCTau[card][region];
 }
 
 
 void
-CrateLinks::set_RCTOf(unsigned int card, unsigned int region, uint8_t value) {
+CrateLinks::set_RCOf(unsigned int card, unsigned int region, uint8_t value) {
   check_RC_indicies(card, region);
   RCOf[card][region] = value & 0x1;
 }
 
 
 uint8_t
-CrateLinks::get_RCTOf(unsigned int card, unsigned int region) {
+CrateLinks::get_RCOf(unsigned int card, unsigned int region) {
   check_RC_indicies(card, region);
-  return RCOf[card][region]
+  return RCOf[card][region];
 }
 
 
 void
-CrateLinks::set_RCTHad(unsigned int card, unsigned int region, uint8_t value) {
+CrateLinks::set_RCHad(unsigned int card, unsigned int region, uint8_t value) {
   check_RC_indicies(card, region);
   RCHad[card][region] = value & 0x1;
 }
 
 
 uint8_t
-CrateLinks::get_RCTHad(unsigned int card, unsigned int region) {
+CrateLinks::get_RCHad(unsigned int card, unsigned int region) {
   check_RC_indicies(card, region);
-  return RCHad[card][region]
+  return RCHad[card][region];
 }
 
 
@@ -111,7 +111,7 @@ CrateLinks::set_HFEt(unsigned int region, unsigned int bit, uint8_t value) {
   if (bit > 7) {
     throw std::invalid_argument("Invalid HF Et bit number");
   }
-  HFEt[region] = value & 0x1;
+  HFEt[region][bit] = value & 0x1;
 }
 
 
@@ -123,7 +123,7 @@ CrateLinks::get_HFEt(unsigned int region, unsigned int bit) {
   if (bit > 7) {
     throw std::invalid_argument("Invalid HF Et bit number");
   }
-  return HFEt[region];
+  return HFEt[region][bit];
 }
 
 

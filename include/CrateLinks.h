@@ -12,6 +12,7 @@
 
 #include <iostream>
 #include <stdexcept>
+#include <vector>
 #include <stdint.h>
 
 
@@ -65,8 +66,8 @@ class CrateLinks {
 
 
   public:
-    OrscLinks() { table_filled = false; };
-    ~OrscLinks() {};
+    CrateLinks() { table_filled = false; };
+    ~CrateLinks() {};
 
     void set_RCEt(unsigned int card, unsigned int region, unsigned int bit,
         uint8_t value);
@@ -105,3 +106,5 @@ class CrateLinks {
 
     std::vector<uint8_t> link_values(int link);
 };
+
+#endif
