@@ -1,5 +1,5 @@
 /**
- * Filename: OrscLinks.cc
+ * Filename: CrateLinks.cc
  *
  * Description: Abstracts the output bits for a single RCT crate to be arranged
  *              into bitfields used in the oRSC -> CTP7/MP7 optical links
@@ -7,11 +7,11 @@
  * Author: D. Austin Belknap, UW-Madison
  */
 
-#include "../include/CaloLinks.h"
+#include "../include/CrateLinks.h"
 
 
 void
-CaloLinks::check_RC_indicies(unsigned int card, unsigned int region) {
+CrateLinks::check_RC_indicies(unsigned int card, unsigned int region) {
   if (card > 6) {
     throw std::invalid_argument("Invalid RC card index");
   }
@@ -22,7 +22,7 @@ CaloLinks::check_RC_indicies(unsigned int card, unsigned int region) {
 
 
 void
-CaloLinks::set_RCTEt(unsigned int card, unsigned int region, unsigned int bit,
+CrateLinks::set_RCTEt(unsigned int card, unsigned int region, unsigned int bit,
     uint8_t value) {
   check_RC_indicies(card, region);
   if (bit > 9) {
@@ -33,9 +33,10 @@ CaloLinks::set_RCTEt(unsigned int card, unsigned int region, unsigned int bit,
 
 
 uint8_t
-CaloLinks::get_RCTEt(unsigned int card, unsigned int region, unsigned int bit) {
+CrateLinks::get_RCTEt(unsigned int card, unsigned int region,
+    unsigned int bit) {
   check_RC_indicies(card, region);
-  if (bit < 0 || bit > 9) {
+  if (bit > 9) {
     throw std::invalid_argument("Invalid RC Et bit index");
   }
   return RCEt[card][region][bit];
@@ -43,49 +44,49 @@ CaloLinks::get_RCTEt(unsigned int card, unsigned int region, unsigned int bit) {
 
 
 void
-CaloLinks::set_RCTTau(unsigned int card, unsigned int region, uint8_t value) {
+CrateLinks::set_RCTTau(unsigned int card, unsigned int region, uint8_t value) {
   check_RC_indicies(card, region);
   RCTau[card][region] = value & 0x1;
 }
 
 
 uint8_t
-CaloLinks::get_RCTTau(unsigned int card, unsigned int region) {
+CrateLinks::get_RCTTau(unsigned int card, unsigned int region) {
   check_RC_indicies(card, region);
   return RCTau[card][region]
 }
 
 
 void
-CaloLinks::set_RCTOf(unsigned int card, unsigned int region, uint8_t value) {
+CrateLinks::set_RCTOf(unsigned int card, unsigned int region, uint8_t value) {
   check_RC_indicies(card, region);
   RCOf[card][region] = value & 0x1;
 }
 
 
 uint8_t
-CaloLinks::get_RCTOf(unsigned int card, unsigned int region) {
+CrateLinks::get_RCTOf(unsigned int card, unsigned int region) {
   check_RC_indicies(card, region);
   return RCOf[card][region]
 }
 
 
 void
-CaloLinks::set_RCTHad(unsigned int card, unsigned int region, uint8_t value) {
+CrateLinks::set_RCTHad(unsigned int card, unsigned int region, uint8_t value) {
   check_RC_indicies(card, region);
   RCHad[card][region] = value & 0x1;
 }
 
 
 uint8_t
-CaloLinks::get_RCTHad(unsigned int card, unsigned int region) {
+CrateLinks::get_RCTHad(unsigned int card, unsigned int region) {
   check_RC_indicies(card, region);
   return RCHad[card][region]
 }
 
 
 void
-CaloLinks::set_HFFg(unsigned int region, uint8_t value) {
+CrateLinks::set_HFFg(unsigned int region, uint8_t value) {
   if (region > 7) {
     throw std::invalid_argument("Invalid HF region number");
   }
@@ -94,7 +95,7 @@ CaloLinks::set_HFFg(unsigned int region, uint8_t value) {
 
 
 uint8_t
-CaloLinks::get_HFFg(unsigned int region) {
+CrateLinks::get_HFFg(unsigned int region) {
   if (region > 7) {
     throw std::invalid_argument("Invalid HF region number");
   }
@@ -103,7 +104,7 @@ CaloLinks::get_HFFg(unsigned int region) {
 
 
 void
-CaloLinks::set_HFEt(unsigned int region, unsigned int bit, uint8_t value) {
+CrateLinks::set_HFEt(unsigned int region, unsigned int bit, uint8_t value) {
   if (region > 7) {
     throw std::invalid_argument("Invalid HF region number");
   }
@@ -115,7 +116,7 @@ CaloLinks::set_HFEt(unsigned int region, unsigned int bit, uint8_t value) {
 
 
 uint8_t
-CaloLinks::get_HFEt(unsigned int region, unsigned int bit) {
+CrateLinks::get_HFEt(unsigned int region, unsigned int bit) {
   if (region > 7) {
     throw std::invalid_argument("Invalid HF region number");
   }
@@ -127,7 +128,7 @@ CaloLinks::get_HFEt(unsigned int region, unsigned int bit) {
 
 
 void
-CaloLinks::set_NEPos(unsigned int cand, unsigned int bit, uint8_t value) {
+CrateLinks::set_NEPos(unsigned int cand, unsigned int bit, uint8_t value) {
   if (cand > 3) {
     throw std::invalid_argument("Invalid NE candidate index");
   }
@@ -139,7 +140,7 @@ CaloLinks::set_NEPos(unsigned int cand, unsigned int bit, uint8_t value) {
 
 
 uint8_t
-CaloLinks::get_NEPos(unsigned int cand, unsigned int bit) {
+CrateLinks::get_NEPos(unsigned int cand, unsigned int bit) {
   if (cand > 3) {
     throw std::invalid_argument("Invalid NE candidate index");
   }
@@ -151,7 +152,7 @@ CaloLinks::get_NEPos(unsigned int cand, unsigned int bit) {
 
 
 void
-CaloLinks::set_NEEt(unsigned int cand, unsigned int bit, uint8_t value) {
+CrateLinks::set_NEEt(unsigned int cand, unsigned int bit, uint8_t value) {
   if (cand > 3) {
     throw std::invalid_argument("Invalid NE candidate index");
   }
@@ -163,7 +164,7 @@ CaloLinks::set_NEEt(unsigned int cand, unsigned int bit, uint8_t value) {
 
 
 uint8_t
-CaloLinks::get_NEEt(unsigned int cand, unsigned int bit) {
+CrateLinks::get_NEEt(unsigned int cand, unsigned int bit) {
   if (cand > 3) {
     throw std::invalid_argument("Invalid NE candidate index");
   }
@@ -175,7 +176,7 @@ CaloLinks::get_NEEt(unsigned int cand, unsigned int bit) {
 
 
 void
-CaloLinks::set_IEPos(unsigned int cand, unsigned int bit, uint8_t value) {
+CrateLinks::set_IEPos(unsigned int cand, unsigned int bit, uint8_t value) {
   if (cand > 3) {
     throw std::invalid_argument("Invalid IE candidate index");
   }
@@ -187,7 +188,7 @@ CaloLinks::set_IEPos(unsigned int cand, unsigned int bit, uint8_t value) {
 
 
 uint8_t
-CaloLinks::get_IEPos(unsigned int cand, unsigned int bit) {
+CrateLinks::get_IEPos(unsigned int cand, unsigned int bit) {
   if (cand > 3) {
     throw std::invalid_argument("Invalid IE candidate index");
   }
@@ -199,7 +200,7 @@ CaloLinks::get_IEPos(unsigned int cand, unsigned int bit) {
 
 
 void
-CaloLinks::set_IEEt(unsigned int cand, unsigned int bit, uint8_t value) {
+CrateLinks::set_IEEt(unsigned int cand, unsigned int bit, uint8_t value) {
   if (cand > 3) {
     throw std::invalid_argument("Invalid IE candidate index");
   }
@@ -211,7 +212,7 @@ CaloLinks::set_IEEt(unsigned int cand, unsigned int bit, uint8_t value) {
 
 
 uint8_t
-CaloLinks::get_IEEt(unsigned int cand, unsigned int bit) {
+CrateLinks::get_IEEt(unsigned int cand, unsigned int bit) {
   if (cand > 3) {
     throw std::invalid_argument("Invalid IE candidate index");
   }
@@ -226,7 +227,7 @@ CaloLinks::get_IEEt(unsigned int cand, unsigned int bit) {
  * Output the link values as 24 8-bit integers.
  */
 std::vector<uint8_t>
-CaloLinks::link_values(int link_number) {
+CrateLinks::link_values(int link_number) {
   std::vector<uint8_t> link;
 
   uint8_t val;
@@ -254,7 +255,7 @@ CaloLinks::link_values(int link_number) {
 
 
 void
-CaloLinks::print_table(int link) {
+CrateLinks::print_table(int link) {
   uint8_t (*Link)[24][8];
 
   if (link == 1) {
@@ -280,7 +281,7 @@ CaloLinks::print_table(int link) {
  * Arrange the JSC output bits into the bitfields for the 2 oRSC optical links.
  */
 void
-CaloLinks::populate_link_tables() {
+CrateLinks::populate_link_tables() {
   uint8_t L1 [24][8] = {
     {0,             0,              0,              0,              0,              0,              0,              0},
     {0,             0,              0,              0,              0,              0,              0,              0},

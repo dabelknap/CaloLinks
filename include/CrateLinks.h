@@ -1,5 +1,5 @@
 /**
- * Filename: CaloLinks.h
+ * Filename: CrateLinks.h
  *
  * Description: Abstracts the JSC output for a single RCT crate into the
  *              bit-fields used in the oRSC -> MP7/CTP7 optical links.
@@ -7,8 +7,8 @@
  * Author: D. Ausitn Belknap, UW-Madison
  */
 
-#ifndef _CALOLINKS_h
-#define _CALOLINKS_h
+#ifndef _CRATELINKS_h
+#define _CRATELINKS_h
 
 #include <iostream>
 #include <stdexcept>
@@ -20,7 +20,7 @@
  * for defining the various RCT bits, and arranges them into the bit-fields used
  * in the optical links.
  */
-class CaloLinks {
+class CrateLinks {
   private:
     // RC Et, Index: RC number, region, bit number
     uint8_t RCEt[7][2][10];

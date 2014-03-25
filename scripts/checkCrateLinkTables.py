@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 """
-Reads over CaloLinks.cc and checks that the link bitfield table is valid. It
+Reads over CrateLinks.cc and checks that the link bitfield table is valid. It
 makes sure that all named bits are represented the appropriate number of times.
 It does not check the arrangement of the bits.
 
@@ -11,7 +11,7 @@ Author: D. Austin Belknap, UW-Madison
 import re
 
 
-ORSCLINKFILE = "../src/CaloLinks.cc"
+ORSCLINKFILE = "../src/CrateLinks.cc"
 
 
 def expected_counts():
@@ -58,7 +58,7 @@ def expected_counts():
 
 def parse_file(infile):
     """
-    Use Regex to grab the link tables from CaloLinks.cc as a string, and
+    Use Regex to grab the link tables from CrateLinks.cc as a string, and
     tokenize the output.
     """
     S = infile.read()
@@ -88,7 +88,7 @@ def generate_counts(x):
 
 def check_file():
     """
-    Open CaloLinks.cc, parse the link tables from file, compute the number of
+    Open CrateLinks.cc, parse the link tables from file, compute the number of
     times each named bit occurs in the table and compare with the expected.
     """
     with open(ORSCLINKFILE, 'r') as infile:
