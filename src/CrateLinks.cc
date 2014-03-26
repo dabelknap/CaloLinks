@@ -159,7 +159,7 @@ CrateLinks::set_NEEt(unsigned int cand, unsigned int bit, uint8_t value) {
   if (bit > 5) {
     throw std::invalid_argument("Invalid NE Et bit index");
   }
-  NEPos[cand][bit] = value & 0x1;
+  NEEt[cand][bit] = value & 0x1;
 }
 
 
@@ -171,7 +171,7 @@ CrateLinks::get_NEEt(unsigned int cand, unsigned int bit) {
   if (bit > 5) {
     throw std::invalid_argument("Invalid NE Et bit index");
   }
-  return NEPos[cand][bit];
+  return NEEt[cand][bit];
 }
 
 
@@ -207,7 +207,7 @@ CrateLinks::set_IEEt(unsigned int cand, unsigned int bit, uint8_t value) {
   if (bit > 5) {
     throw std::invalid_argument("Invalid IE Et bit index");
   }
-  IEPos[cand][bit] = value & 0x1;
+  IEEt[cand][bit] = value & 0x1;
 }
 
 
@@ -219,7 +219,7 @@ CrateLinks::get_IEEt(unsigned int cand, unsigned int bit) {
   if (bit > 5) {
     throw std::invalid_argument("Invalid IE Et bit index");
   }
-  return IEPos[cand][bit];
+  return IEEt[cand][bit];
 }
 
 
