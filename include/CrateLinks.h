@@ -56,9 +56,11 @@ class CrateLinks {
     // Iso EG Et, Index: cand. index, bit number
     uint8_t IEEt[4][6];
 
+    uint8_t ZERO;
 
-    uint8_t Link1 [24][8];
-    uint8_t Link2 [24][8];
+
+    uint8_t* Link1 [24][8];
+    uint8_t* Link2 [24][8];
 
     bool table_filled;
 
@@ -66,7 +68,7 @@ class CrateLinks {
 
 
   public:
-    CrateLinks() { table_filled = false; };
+    CrateLinks() { table_filled = false; ZERO=0; };
     ~CrateLinks() {};
 
     void set_RCEt(unsigned int card, unsigned int region, unsigned int bit,
