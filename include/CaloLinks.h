@@ -34,7 +34,7 @@ class CaloLinks {
 
     CrateLinks& get_crate(unsigned int crate);
 
-    void write_to_file(std::ofstream outfile);
+    void write_to_file(std::ofstream& outfile);
 };
 
 #endif

@@ -26,7 +26,7 @@ CaloLinks::get_crate(unsigned int crate) {
 
 
 void
-CaloLinks::write_to_file(std::ofstream outfile) {
+CaloLinks::write_to_file(std::ofstream& outfile) {
   outfile << "run: " << run << " lumi: " << lumi << " event: " << event << std::endl;
 
   for (int i = 0; i < 18; ++i) {
