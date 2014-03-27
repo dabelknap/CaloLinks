@@ -10,6 +10,12 @@
 #include "../include/CrateLinks.h"
 
 
+CrateLinks::CrateLinks() {
+    ZERO = 0;
+    define_link_tables();
+}
+
+
 void
 CrateLinks::check_RC_indicies(unsigned int card, unsigned int region) {
   if (card > 6) {
@@ -281,7 +287,7 @@ CrateLinks::print_table(int link) {
  * Arrange the JSC output bits into the bitfields for the 2 oRSC optical links.
  */
 void
-CrateLinks::populate_link_tables() {
+CrateLinks::define_link_tables() {
   uint8_t* L1 [24][8] = {
     {&ZERO,             &ZERO,              &ZERO,              &ZERO,              &ZERO,              &ZERO,              &ZERO,              &ZERO},
     {&ZERO,             &ZERO,              &ZERO,              &ZERO,              &ZERO,              &ZERO,              &ZERO,              &ZERO},
@@ -344,6 +350,4 @@ CrateLinks::populate_link_tables() {
       Link2[i][j] = L2[i][j];
     }
   }
-
-  table_filled = true;
 }

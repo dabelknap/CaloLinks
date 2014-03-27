@@ -42,8 +42,6 @@ CaloLinks::write_to_file(std::ofstream& outfile) {
 
   // For all RCT crates
   for (int i = 0; i < 18; ++i) {
-    // make sure the bits have been loaded into the bit-fields
-    RCTlinks[i].populate_link_tables();
 
     // retrive the bit values for each link
     std::vector<uint8_t> link1 = RCTlinks[i].link_values(1);

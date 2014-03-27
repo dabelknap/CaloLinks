@@ -62,13 +62,13 @@ class CrateLinks {
     uint8_t* Link1 [24][8];
     uint8_t* Link2 [24][8];
 
-    bool table_filled;
+    void define_link_tables();
 
     static void check_RC_indicies(unsigned int card, unsigned int region);
 
 
   public:
-    CrateLinks() { table_filled = false; ZERO=0; };
+    CrateLinks();
     ~CrateLinks() {};
 
     void set_RCEt(unsigned int card, unsigned int region, unsigned int bit,
@@ -102,7 +102,6 @@ class CrateLinks {
     uint8_t get_IEEt(unsigned int cand, unsigned int bit);
 
 
-    void populate_link_tables();
 
     void print_table(int link);
 
