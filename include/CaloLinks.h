@@ -1,7 +1,9 @@
 /**
  * Filename: CaloLinks.h
  *
- * Description:
+ * Description: This class contains the collection for CrateLink objects to
+ *              represent all 18 RCT crates. It includes a method to write the
+ *              link values to a formatted text file.
  *
  * Author: D. Austin Belknap, UW-Madison
  */

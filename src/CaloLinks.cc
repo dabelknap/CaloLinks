@@ -1,7 +1,8 @@
 /**
  * Filename: CaloLinks.cc
  *
- * Description:
+ * Description: Contains methods for acessing the link info for specific crates
+ *              as well as the ability to write the link data to a file.
  *
  * Author: D. Austin Belknap, UW-Madison
  */
@@ -9,6 +10,9 @@
 #include "../include/CaloLinks.h"
 
 
+/**
+ * Assign event ID to identify a particular collection of RCT links
+ */
 CaloLinks::CaloLinks(unsigned int Event, unsigned int Lumi, unsigned int Run) {
   event = Event;
   lumi = Lumi;
@@ -16,6 +20,10 @@ CaloLinks::CaloLinks(unsigned int Event, unsigned int Lumi, unsigned int Run) {
 }
 
 
+/**
+ * Allows you to access the individual crates by reference - no need to use
+ * pointers.
+ */
 CrateLinks&
 CaloLinks::get_crate(unsigned int crate) {
   if (crate > 17) {
@@ -25,17 +33,22 @@ CaloLinks::get_crate(unsigned int crate) {
 }
 
 
+/**
+ * Write the link values of all 18 craters to a formatted text file.
+ */
 void
 CaloLinks::write_to_file(std::ofstream& outfile) {
   outfile << "run: " << run << " lumi: " << lumi << " event: " << event << std::endl;
 
+  // For all RCT crates
   for (int i = 0; i < 18; ++i) {
+    // make sure the bits have been loaded into the bit-fields
     RCTlinks[i].populate_link_tables();
 
+    // retrive the bit values for each link
     std::vector<uint8_t> link1 = RCTlinks[i].link_values(1);
     std::vector<uint8_t> link2 = RCTlinks[i].link_values(2);
 
-    // Print the contents of each link into the text file
     outfile << std::setw(2) << std::uppercase << std::setfill('0');
     outfile << "Crate " << std::setw(2) << i << " Link 0 ";
 
