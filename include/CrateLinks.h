@@ -106,6 +106,8 @@ class CrateLinks {
     void print_table(int link);
 
     std::vector<uint8_t> link_values(int link);
+
+    void set_links(std::vector<uint8_t>& link_values, unsigned int link);
 };
 
 #endif

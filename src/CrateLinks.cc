@@ -260,6 +260,43 @@ CrateLinks::link_values(int link_number) {
 }
 
 
+/**
+ *
+ */
+void
+CrateLinks::set_links(std::vector<uint8_t>& link_values, unsigned int link) {
+    if (link_values.size() != 24) {
+        throw std::invalid_argument("Vector of link values has the wrong length");
+    }
+
+    uint8_t val;
+
+    if (link == 1) {
+        for (int i = 0; i < 24; ++i) {
+            val = link_values.at(i);
+
+            for (int j = 7; j >=0; ++j) {
+                *Link1[i][j] = val & 0x1;
+                val >>= 1;
+            }
+        }
+    }
+    else if (link == 2) {
+        for (int i = 0; i < 24; ++i) {
+            val = link_values.at(i);
+
+            for (int j = 7; j >=0; ++j) {
+                *Link2[i][j] = val & 0x1;
+                val >>= 1;
+            }
+        }
+    }
+    else {
+        throw std::invalid_argument("Incorrect Link index given");
+    }
+}
+
+
 void
 CrateLinks::print_table(int link) {
   uint8_t* (*Link)[24][8];
