@@ -101,7 +101,7 @@ CaloLinks::read_from_file(std::ifstream& infile) {
   std::vector<uint32_t> link2[18];
 
   std::string str;
-  int val;
+  long int val;
 
   while (infile >> str) {
     if (str == "run:") {
@@ -119,14 +119,14 @@ CaloLinks::read_from_file(std::ifstream& infile) {
     }
   }
 
-  // skip two lines
+  getline(infile, str);
   getline(infile, str);
   getline(infile, str);
 
   for (int i = 0; i < 6; ++i) {
     for (int j = 0; j < 36; ++j) {
 
-      infile >> val;
+      infile >> std::hex >> val;
       uint32_t value = (uint32_t)val;
 
       if (j % 2 == 0) {
@@ -137,6 +137,9 @@ CaloLinks::read_from_file(std::ifstream& infile) {
       }
     }
   }
+  infile >> std::dec;
+  getline(infile, str);
+  getline(infile, str);
 
   for (int i = 0; i < 18; ++i) {
     RCTlinks[i].set_links(link1[i], 1);

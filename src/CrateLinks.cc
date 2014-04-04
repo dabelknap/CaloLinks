@@ -276,24 +276,24 @@ CrateLinks::set_links(std::vector<uint32_t>& link_values, int link) {
     for (int i = 0; i < 6; ++i) {
       val = link_values.at(i);
 
-      for (int j = 31; j >=0; ++j) {
-        *Link1[4*i + 3 - (32-j)/8][j % 8] = val & 0x1;
+      for (int j = 31; j >=0; --j) {
+        *(Link1[4*i + 3 - (31-j)/8][j % 8]) = val & 0x1;
         val >>= 1;
       }
     }
   }
-  if (link == 2) {
+  else if (link == 2) {
     for (int i = 0; i < 6; ++i) {
       val = link_values.at(i);
 
-      for (int j = 31; j >=0; ++j) {
-        *Link2[4*i + 3 - (32-j)/8][j % 8] = val & 0x1;
+      for (int j = 31; j >=0; --j) {
+        *(Link2[4*i + 3 - (31-j)/8][j % 8]) = val & 0x1;
         val >>= 1;
       }
     }
   }
   else {
-    throw std::invalid_argument("Incorrect Link index given");
+    throw std::invalid_argument("set_links: Incorrect Link index given");
   }
 }
 
