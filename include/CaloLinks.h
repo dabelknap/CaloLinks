@@ -34,6 +34,7 @@ class CaloLinks {
 
   public:
     CaloLinks(unsigned int event, unsigned int lumi, unsigned int run);
+    CaloLinks() { };
     ~CaloLinks() { }
 
     CrateLinks& get_crate(unsigned int crate);
