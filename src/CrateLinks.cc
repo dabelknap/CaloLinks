@@ -265,7 +265,7 @@ CrateLinks::link_values(int link_number) {
  *
  */
 void
-CrateLinks::set_links(std::vector<uint32_t>& link_values, unsigned int link) {
+CrateLinks::set_links(std::vector<uint32_t>& link_values, int link) {
   if (link_values.size() != 6) {
     throw std::invalid_argument("Vector of link values has the wrong length");
   }
