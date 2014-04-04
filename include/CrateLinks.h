@@ -105,7 +105,7 @@ class CrateLinks {
 
     void print_table(int link);
 
-    std::vector<uint8_t> link_values(int link);
+    std::vector<uint32_t> link_values(int link);
 };
 
 #endif
