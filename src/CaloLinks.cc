@@ -38,6 +38,10 @@ CaloLinks::get_crate(unsigned int crate) {
  */
 void
 CaloLinks::write_to_file(std::ofstream& outfile) {
+  if (!infile.is_open()) {
+    throw std::runtime_error("File is not open");
+  }
+
   outfile << "run: " << run << " lumi: " << lumi << " event: " << event << std::endl;
 
   // For all RCT crates
@@ -61,5 +65,42 @@ CaloLinks::write_to_file(std::ofstream& outfile) {
         outfile << " " << std::setw(2) << std::hex << int(link2.at(j)) << std::dec;
     }
     outfile << std::endl;
+  }
+}
+
+
+/**
+ * Read the link values in from a formatted text file and fill a CrateLink object
+ */
+void
+CaloLinks::read_from_file(std::ifstream& infile) {
+  std::vector<uint8_t> link_values (24);
+
+  if (!infile.is_open()) {
+    throw std::runtime_error("File is not open");
+  }
+
+  if (infile.eof()) {
+    throw std::runtime_error("End of file");
+  }
+
+  std::string str;
+
+  getline(ifstream, str, " ");
+  if (str == "run:") {
+    getline(ifstream, str, " ");
+    run = atoi(str.c_str());
+  }
+
+  getline(ifstream, str, " ");
+  if (str == "lumi:") {
+    getline(ifstream, str, " ");
+    lumi = atoi(str.c_str());
+  }
+
+  getline(ifstream, str, " ");
+  if (str == "event:") {
+    getline(ifstream, str, " ");
+    event = atoi(str.c_str());
   }
 }

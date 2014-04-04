@@ -16,6 +16,8 @@
 #include <iomanip>
 #include <stdexcept>
 #include <vector>
+#include <string>
+#include <cstdlib>
 #include <stdint.h>
 
 #include "CrateLinks.h"
@@ -37,6 +39,8 @@ class CaloLinks {
     CrateLinks& get_crate(unsigned int crate);
 
     void write_to_file(std::ofstream& outfile);
+
+    void read_from_file(std::ifstream& infile);
 };
 
 #endif
