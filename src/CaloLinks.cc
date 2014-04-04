@@ -38,7 +38,7 @@ CaloLinks::get_crate(unsigned int crate) {
  */
 void
 CaloLinks::write_to_file(std::ofstream& outfile) {
-  if (!infile.is_open()) {
+  if (!outfile.is_open()) {
     throw std::runtime_error("File is not open");
   }
 
@@ -89,8 +89,6 @@ CaloLinks::write_to_file(std::ofstream& outfile) {
  */
 void
 CaloLinks::read_from_file(std::ifstream& infile) {
-  std::vector<uint8_t> link_values (24);
-
   if (!infile.is_open()) {
     throw std::runtime_error("File is not open");
   }
@@ -99,23 +97,49 @@ CaloLinks::read_from_file(std::ifstream& infile) {
     throw std::runtime_error("End of file");
   }
 
+  std::vector<uint32_t> link1[18];
+  std::vector<uint32_t> link2[18];
+
   std::string str;
+  int val;
 
-  getline(ifstream, str, " ");
-  if (str == "run:") {
-    getline(ifstream, str, " ");
-    run = atoi(str.c_str());
+  while (infile >> str) {
+    if (str == "run:") {
+      infile >> val;
+      run = (unsigned int)val;
+    }
+    if (str == "lumi:") {
+      infile >> val;
+      lumi = (unsigned int)val;
+    }
+    if (str == "event:") {
+      infile >> val;
+      event = (unsigned int)val;
+      break;
+    }
   }
 
-  getline(ifstream, str, " ");
-  if (str == "lumi:") {
-    getline(ifstream, str, " ");
-    lumi = atoi(str.c_str());
+  // skip two lines
+  getline(infile, str);
+  getline(infile, str);
+
+  for (int i = 0; i < 6; ++i) {
+    for (int j = 0; j < 36; ++j) {
+
+      infile >> val;
+      uint32_t value = (uint32_t)val;
+
+      if (j % 2 == 0) {
+        link1[j/2].push_back(value);
+      }
+      else {
+        link2[j/2].push_back(value);
+      }
+    }
   }
 
-  getline(ifstream, str, " ");
-  if (str == "event:") {
-    getline(ifstream, str, " ");
-    event = atoi(str.c_str());
+  for (int i = 0; i < 18; ++i) {
+    RCTlinks[i].set_links(link1[i], 1);
+    RCTlinks[i].set_links(link2[i], 2);
   }
 }
