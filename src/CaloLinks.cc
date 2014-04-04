@@ -34,32 +34,47 @@ CaloLinks::get_crate(unsigned int crate) {
 
 
 /**
- * Write the link values of all 18 craters to a formatted text file.
+ * Write the link values of all 18 crates to a formatted text file.
  */
 void
 CaloLinks::write_to_file(std::ofstream& outfile) {
   outfile << "run: " << run << " lumi: " << lumi << " event: " << event << std::endl;
 
-  // For all RCT crates
+  std::vector<uint32_t> link1[18];
+  std::vector<uint32_t> link2[18];
+
+  // grab link data for all 18 crates
   for (int i = 0; i < 18; ++i) {
+    link1[i] = RCTlinks[i].link_values(1);
+    link2[i] = RCTlinks[i].link_values(2);
+  }
 
-    // retrive the bit values for each link
-    std::vector<uint8_t> link1 = RCTlinks[i].link_values(1);
-    std::vector<uint8_t> link2 = RCTlinks[i].link_values(2);
-
-    outfile << std::setw(2) << std::uppercase << std::setfill('0');
-    outfile << "Crate " << std::setw(2) << i << " Link 0 ";
-
-    for (int j = 0; j < 24; ++j) {
-        outfile << " " << std::setw(2) << std::hex << int(link1.at(j)) << std::dec;
+  // Crate number labels
+  outfile << std::setw(2) << std::uppercase << std::setfill('0');
+  for (int i = 0; i < 18; ++i) {
+    outfile << "Crate " << std::setw(2) << i;
+    if (i < 17) {
+      outfile << "          ";
     }
+  }
 
-    outfile << std::endl;
-    outfile << "Crate " << std::setw(2) << i << " Link 1 ";
+  // Link number labels
+  outfile << std::endl;
+  for (int i = 0; i < 18; ++i) {
+    outfile << "Link1    Link2";
+    if (i < 17) {
+      outfile << "    ";
+    }
+  }
 
-    for (int j = 0; j < 24; ++j) {
-        outfile << " " << std::setw(2) << std::hex << int(link2.at(j)) << std::dec;
+  // print link data as 6 32-bit words per link
+  outfile << std::endl;
+  for (int i = 0 ; i < 6; ++i) {
+    for (int j = 0; j < 18; ++j) {
+      outfile << std::setw(8) << std::hex << int(link1[j].at(i)) << " ";
+      outfile << std::setw(8) << std::hex << int(link2[j].at(i)) << " ";
     }
     outfile << std::endl;
   }
+  outfile << std::dec << std::endl;
 }
