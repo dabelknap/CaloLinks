@@ -10,9 +10,12 @@
 #include "../include/CrateLinks.h"
 
 
+/**
+ * Default contructor.
+ */
 CrateLinks::CrateLinks() {
-    ZERO = 0;
-    define_link_tables();
+  ZERO = 0;
+  define_link_tables();
 }
 
 
@@ -230,17 +233,15 @@ CrateLinks::get_IEEt(unsigned int cand, unsigned int bit) {
 
 
 /**
- * Output the link values as 24 8-bit integers.
+ * Output the link values as 6 32-bit integers.
  */
-std::vector<uint8_t>
+std::vector<uint32_t>
 CrateLinks::link_values(int link_number) {
-  std::vector<uint8_t> link;
+  std::vector<uint32_t> link;
 
-  uint8_t val;
+  uint32_t val = 0;
 
   for (int i = 0; i < 24; i++) {
-    val = 0;
-
     for (int j = 0; j < 8; j++) {
       val <<= 1;
 
@@ -251,12 +252,58 @@ CrateLinks::link_values(int link_number) {
         val |= *Link2[i][j] & 0x1;
       }
       else {
-          throw std::invalid_argument("Invalid link number given");
+        throw std::invalid_argument("Invalid link number given");
       }
     }
-    link.push_back(val);
+    if (i % 4 == 3) {
+      link.push_back(val);
+      val = 0;
+    }
   }
   return link;
+}
+
+
+/**
+ * Allows you to pass a vector of uint32_t's that contains the data of a given
+ * link. Basically, it allows you to set the link values with the output of
+ * link_values(...).
+ */
+void
+CrateLinks::set_links(std::vector<uint32_t>& link_values, int link) {
+  if (link_values.size() != 6) {
+    throw std::invalid_argument("Vector of link values has the wrong length");
+  }
+
+  uint32_t val;
+
+  // Because we retrieve the least-significant bit from val first, we have to
+  // write the values into the link tables in reverse. e.g. the first 32-bit
+  // word covers the first 4 rows in the table. We start at [3][7], and work our
+  // way back to [0][0].
+  if (link == 1) {
+    for (int i = 0; i < 6; ++i) {
+      val = link_values.at(i);
+
+      for (int j = 31; j >=0; --j) {
+        *(Link1[4*i + 3 - (31-j)/8][j % 8]) = val & 0x1;
+        val >>= 1;
+      }
+    }
+  }
+  else if (link == 2) {
+    for (int i = 0; i < 6; ++i) {
+      val = link_values.at(i);
+
+      for (int j = 31; j >=0; --j) {
+        *(Link2[4*i + 3 - (31-j)/8][j % 8]) = val & 0x1;
+        val >>= 1;
+      }
+    }
+  }
+  else {
+    throw std::invalid_argument("set_links: Incorrect Link index given");
+  }
 }
 
 

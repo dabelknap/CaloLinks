@@ -102,10 +102,11 @@ class CrateLinks {
     uint8_t get_IEEt(unsigned int cand, unsigned int bit);
 
 
-
     void print_table(int link);
 
-    std::vector<uint8_t> link_values(int link);
+    std::vector<uint32_t> link_values(int link);
+
+    void set_links(std::vector<uint32_t>& link_values, int link);
 };
 
 #endif
