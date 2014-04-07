@@ -103,6 +103,7 @@ CaloLinks::read_from_file(std::ifstream& infile) {
   std::string str;
   long int val;
 
+  // retrieve event info from file
   while (infile >> str) {
     if (str == "run:") {
       infile >> val;
@@ -123,6 +124,7 @@ CaloLinks::read_from_file(std::ifstream& infile) {
   getline(infile, str);
   getline(infile, str);
 
+  // loop over the grid of link data
   for (int i = 0; i < 6; ++i) {
     for (int j = 0; j < 36; ++j) {
 
@@ -141,6 +143,7 @@ CaloLinks::read_from_file(std::ifstream& infile) {
   getline(infile, str);
   getline(infile, str);
 
+  // load the link vectors into the CrateLink objects
   for (int i = 0; i < 18; ++i) {
     RCTlinks[i].set_links(link1[i], 1);
     RCTlinks[i].set_links(link2[i], 2);

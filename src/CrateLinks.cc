@@ -10,6 +10,9 @@
 #include "../include/CrateLinks.h"
 
 
+/**
+ * Default contructor.
+ */
 CrateLinks::CrateLinks() {
   ZERO = 0;
   define_link_tables();
@@ -262,7 +265,9 @@ CrateLinks::link_values(int link_number) {
 
 
 /**
- *
+ * Allows you to pass a vector of uint32_t's that contains the data of a given
+ * link. Basically, it allows you to set the link values with the output of
+ * link_values(...).
  */
 void
 CrateLinks::set_links(std::vector<uint32_t>& link_values, int link) {
@@ -272,6 +277,10 @@ CrateLinks::set_links(std::vector<uint32_t>& link_values, int link) {
 
   uint32_t val;
 
+  // Because we retrieve the least-significant bit from val first, we have to
+  // write the values into the link tables in reverse. e.g. the first 32-bit
+  // word covers the first 4 rows in the table. We start at [3][7], and work our
+  // way back to [0][0].
   if (link == 1) {
     for (int i = 0; i < 6; ++i) {
       val = link_values.at(i);
